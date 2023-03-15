@@ -1,0 +1,16 @@
+version: 0.2
+env:
+  secrets-manager:
+    DOCKERHUB_TOKEN: dockerhub:token
+    DOCKERHUB_SUER: dockerhub:user
+phases: 
+  pre_build:
+    commands:
+      -echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_SUER} --password-stdin
+  build:
+    commands:
+      - docker build -t my-angular-app:latest .
+  post_build:
+    commands:
+      - docker tag my-angular-app:latest ${DOCKERHUB_SUER}/my-angular-app:latest
+      - docker push ${DOCKERHUB_SUER}/my-angular-app:latest
