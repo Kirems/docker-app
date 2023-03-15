@@ -15,7 +15,7 @@ export class CalculatorComponent implements OnInit {
     operator: new FormControl('')
   });
 
-  result = null;
+  result = 0;
 
   // Methods ---
   constructor() { }
@@ -26,9 +26,9 @@ export class CalculatorComponent implements OnInit {
   onSubmit() {
 
     // Read values of the form controls from the form group
-    const firstInput = this.calculatorForm.get('firstInput').value;
-    const secondInput = this.calculatorForm.get('secondInput').value;
-    const operator = this.calculatorForm.get('operator').value;
+    const firstInput = (this.calculatorForm.get('firstInput')?.value || 0) as number;
+    const secondInput = (this.calculatorForm.get('secondInput')?.value || 0) as number;
+    const operator = this.calculatorForm.get('operator')?.value;
 
     // Calculate according to the operator
     switch ( operator ) {
@@ -58,7 +58,7 @@ export class CalculatorComponent implements OnInit {
       }
       default: {
 
-        this.result = null;
+        this.result = 0;
         break;
 
       }
@@ -68,10 +68,10 @@ export class CalculatorComponent implements OnInit {
 
   onClear() {
 
-    this.calculatorForm.get('firstInput').setValue(null);
-    this.calculatorForm.get('secondInput').setValue(null);
-    this.calculatorForm.get('operator').setValue('');
-    this.result = null;
+    this.calculatorForm.get('firstInput')?.setValue(null);
+    this.calculatorForm.get('secondInput')?.setValue(null);
+    this.calculatorForm.get('operator')?.setValue('');
+    this.result = 0;
 
   }
 
